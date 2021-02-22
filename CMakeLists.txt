@@ -99,6 +99,13 @@ endif()
 
 # ============================= linking ===============================
 
+# JZ: use llvm Clang to use openmp
+set(CMAKE_CXX_COMPILER "/usr/local/opt/llvm/bin/clang")
+# enable openmp, enable c++ std library
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -lc++")
+# link openmp in llvm
+link_directories("/usr/local/opt/llvm/lib")
+
 if (MODEL)
   add_library(model SHARED model.cpp)
   target_link_libraries(model  igl::core igl::opengl_glfw_imgui)

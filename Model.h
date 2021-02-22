@@ -12,6 +12,8 @@
 
 #include <Eigen/Core>
 
+#include <igl/opengl/glfw/Viewer.h>
+
 // ShapeOp
 #include "Solver.h"
 #include "Constraint.h"
@@ -33,12 +35,23 @@ public:
   Eigen::MatrixXd L0;
 
   ShapeOp::Solver* solver;
+  igl::opengl::glfw::Viewer* viewer;
 
   double k_s;   // k_stress
   double k_e;   // k_electrostatic
+  double k_b;   // k_bending
   double h;
+  double damping;
+  double dampingFactor;
+  bool paused;
 
-  Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F);
+  // pre-assembled variables
+  vector<int> ivs_i;
+  vector<int> ivs_j;
+  vector<int> ivs_k;
+  vector<int> ivs_l;
+
+  Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* viewer);
 
   void step();
 
