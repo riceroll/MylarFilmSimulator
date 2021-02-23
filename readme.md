@@ -7,13 +7,19 @@ To run the code, follow the three steps.
 
 ### 1. Dependency
 ```bash
-# install openMP
+# install homebrew if not installed
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+```bash
+# Install openMP
 brew install llvm
 brew install libomp
 brew upgrade libomp
 ```
 
 ### 2. Build
+
 ```bash
 mkdir build
 cd build

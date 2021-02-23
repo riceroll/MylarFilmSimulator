@@ -101,8 +101,8 @@ endif()
 
 # JZ: use llvm Clang to use openmp
 set(CMAKE_CXX_COMPILER "/usr/local/opt/llvm/bin/clang")
-# enable openmp, enable c++ std library
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -lc++")
+# enable openmp, enable c++ std library, enable o3 optimization level
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -lc++ -o3")
 # link openmp in llvm
 link_directories("/usr/local/opt/llvm/lib")
 
