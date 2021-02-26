@@ -20,7 +20,6 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
   this->V += Eigen::MatrixXd::Random(V.rows(), V.cols()) * 0.1;
   this->F = F;
 
-  this->solver = new ShapeOp::Solver();
 
   set<tuple<int, int>> E;
   auto add_edge = [&](int i, int j) {

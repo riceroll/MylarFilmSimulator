@@ -11,8 +11,6 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_CXX
   "IMGUI_IMPL_OPENGL_LOADER_GLAD"
-  "SHAPEOP_CLANG"
-  "SHAPEOP_EXPORT"
   "model_EXPORTS"
   )
 
@@ -20,6 +18,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   ".././include"
   ".././lib/libShapeOp/src"
+  ".././lib/libigl/external/triangle"
   "../lib/libigl/external/glad/include"
   "../lib/libigl/external/glfw/include"
   "../lib/libigl/external/libigl-imgui/."

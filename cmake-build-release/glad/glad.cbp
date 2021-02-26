@@ -5,7 +5,7 @@
 		<Option title="glad"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\lib\;CMake Files\lib\libigl\;CMake Files\lib\libigl\external\;CMake Files\lib\libigl\external\glfw\;CMake Files\lib\libigl\external\glfw\src\;CMake Files\lib\libigl\external\glad\;CMake Files\lib\libigl\external\libigl-imgui\;CMake Files\lib\libigl\cmake\;CMake Files\lib\libShapeOp\;CMake Files\cmake\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\lib\;CMake Files\lib\libigl\;CMake Files\lib\libigl\external\;CMake Files\lib\libigl\external\glfw\;CMake Files\lib\libigl\external\glfw\src\;CMake Files\lib\libigl\external\glad\;CMake Files\lib\libigl\external\libigl-imgui\;CMake Files\lib\libigl\external\tetgen\;CMake Files\lib\libigl\external\triangle\;CMake Files\lib\libigl\cmake\;CMake Files\cmake\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/Users/Roll/Desktop/mylarSimulator/cmake-build-release/glad"/>
@@ -24,8 +24,6 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add option="-DSHAPEOP_CLANG"/>
-					<Add option="-DSHAPEOP_EXPORT"/>
 					<Add directory="/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/glad/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
@@ -48,8 +46,6 @@
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add option="-DSHAPEOP_CLANG"/>
-					<Add option="-DSHAPEOP_EXPORT"/>
 					<Add directory="/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/glad/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
@@ -93,6 +89,12 @@
 		<Unit filename="/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/libigl-imgui/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\lib\libigl\external\libigl-imgui\"/>
 		</Unit>
+		<Unit filename="/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/tetgen/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\libigl\external\tetgen\"/>
+		</Unit>
+		<Unit filename="/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/triangle/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\libigl\external\triangle\"/>
+		</Unit>
 		<Unit filename="/Users/Roll/Desktop/mylarSimulator/lib/libigl/cmake/CXXFeatures.cmake">
 			<Option virtualFolder="CMake Files\lib\libigl\cmake\"/>
 		</Unit>
@@ -110,12 +112,6 @@
 		</Unit>
 		<Unit filename="/Users/Roll/Desktop/mylarSimulator/lib/libigl/cmake/libigl.cmake">
 			<Option virtualFolder="CMake Files\lib\libigl\cmake\"/>
-		</Unit>
-		<Unit filename="/Users/Roll/Desktop/mylarSimulator/lib/libShapeOp/CMakeLists.txt">
-			<Option virtualFolder="CMake Files\lib\libShapeOp\"/>
-		</Unit>
-		<Unit filename="/Users/Roll/Desktop/mylarSimulator/lib/libShapeOp/FindEigen3.cmake">
-			<Option virtualFolder="CMake Files\lib\libShapeOp\"/>
 		</Unit>
 		<Unit filename="/Users/Roll/Desktop/mylarSimulator/cmake/FindLIBIGL.cmake">
 			<Option virtualFolder="CMake Files\cmake\"/>

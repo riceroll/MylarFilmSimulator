@@ -24,8 +24,6 @@ set(CMAKE_C_COMPILER_ID "AppleClang")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_C
-  "SHAPEOP_CLANG"
-  "SHAPEOP_EXPORT"
   "_GLFW_USE_CONFIG_H"
   )
 

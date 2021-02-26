@@ -4,7 +4,7 @@
 # compile C with /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc
 C_FLAGS =  -fPIC -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -fPIC  
 
-C_DEFINES = -DSHAPEOP_CLANG -DSHAPEOP_EXPORT
+C_DEFINES = 
 
 C_INCLUDES = -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/glad/include 
 

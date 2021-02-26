@@ -14,11 +14,6 @@
 
 #include <igl/opengl/glfw/Viewer.h>
 
-// ShapeOp
-#include "Solver.h"
-#include "Constraint.h"
-#include "Force.h"
-
 
 using namespace std;
 
@@ -34,7 +29,6 @@ public:
   Eigen::MatrixXd Force;
   Eigen::MatrixXd L0;
 
-  ShapeOp::Solver* solver;
   igl::opengl::glfw::Viewer* viewer;
 
   double k_s;   // k_stress

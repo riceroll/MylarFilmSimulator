@@ -17,7 +17,7 @@
 #include <igl/opengl/glfw/imgui/ImGuiMenu.h>
 #include <igl/ray_mesh_intersect.h>
 #include <igl/unproject_ray.h>
-#include <igl/heat_geodesics.h>
+//#include <igl/heat_geodesics.h>
 //#include <igl/upsample.h>
 //#include <igl/colormap.h>
 
@@ -31,11 +31,16 @@
 #include <Eigen/SparseCore>
 #include <Eigen/Dense>
 
+// Mylar
 #include "Model.h"
+#include "Preprocessor.h"
 
 using namespace std;
 
 int main(int argc, char **argv) {
+  Preprocessor p = Preprocessor();
+  p.test();
+
   igl::opengl::glfw::Viewer viewer;
   igl::opengl::glfw::imgui::ImGuiMenu menu;
   viewer.plugins.push_back(&menu);

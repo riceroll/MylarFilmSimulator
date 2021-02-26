@@ -16,8 +16,6 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_CXX
   "IMGUI_IMPL_OPENGL_LOADER_GLAD"
-  "SHAPEOP_CLANG"
-  "SHAPEOP_EXPORT"
   )
 
 # The include file search paths:

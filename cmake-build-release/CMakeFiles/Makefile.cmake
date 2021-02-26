@@ -116,8 +116,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.17.5/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.17.5/CMakeSystem.cmake"
   "../cmake/FindLIBIGL.cmake"
-  "../lib/libShapeOp/CMakeLists.txt"
-  "../lib/libShapeOp/FindEigen3.cmake"
   "../lib/libigl/cmake/CXXFeatures.cmake"
   "../lib/libigl/cmake/DownloadProject.CMakeLists.cmake.in"
   "../lib/libigl/cmake/DownloadProject.cmake"
@@ -131,6 +129,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../lib/libigl/external/glfw/src/glfw3Config.cmake.in"
   "../lib/libigl/external/glfw/src/glfw_config.h.in"
   "../lib/libigl/external/libigl-imgui/CMakeLists.txt"
+  "../lib/libigl/external/tetgen/CMakeLists.txt"
+  "../lib/libigl/external/triangle/CMakeLists.txt"
   )
 
 # The corresponding makefile is:
@@ -151,20 +151,25 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "../lib/libigl/external/.cache/glfw/CMakeLists.txt"
   "../lib/libigl/external/.cache/imgui/CMakeLists.txt"
   "../lib/libigl/external/.cache/libigl-imgui/CMakeLists.txt"
+  "../lib/libigl/external/.cache/tetgen/CMakeLists.txt"
+  "../lib/libigl/external/.cache/triangle/CMakeLists.txt"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "glad/CMakeFiles/CMakeDirectoryInformation.cmake"
   "glfw/CMakeFiles/CMakeDirectoryInformation.cmake"
   "glfw/src/CMakeFiles/CMakeDirectoryInformation.cmake"
   "imgui/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "lib/libShapeOp/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "tetgen/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "triangle/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/geodesy.dir/DependInfo.cmake"
+  "CMakeFiles/preprocessor.dir/DependInfo.cmake"
+  "CMakeFiles/mylar.dir/DependInfo.cmake"
   "CMakeFiles/model.dir/DependInfo.cmake"
   "glad/CMakeFiles/glad.dir/DependInfo.cmake"
   "glfw/src/CMakeFiles/glfw.dir/DependInfo.cmake"
   "imgui/CMakeFiles/imgui.dir/DependInfo.cmake"
-  "lib/libShapeOp/CMakeFiles/ShapeOp.dir/DependInfo.cmake"
+  "tetgen/CMakeFiles/tetgen.dir/DependInfo.cmake"
+  "triangle/CMakeFiles/triangle.dir/DependInfo.cmake"
   )

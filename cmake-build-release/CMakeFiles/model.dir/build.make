@@ -80,15 +80,15 @@ include CMakeFiles/model.dir/flags.make
 CMakeFiles/model.dir/model.cpp.o: CMakeFiles/model.dir/flags.make
 CMakeFiles/model.dir/model.cpp.o: ../model.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Roll/Desktop/mylarSimulator/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/model.dir/model.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/model.dir/model.cpp.o -c /Users/Roll/Desktop/mylarSimulator/model.cpp
+	/usr/local/opt/llvm/bin/clang  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/model.dir/model.cpp.o -c /Users/Roll/Desktop/mylarSimulator/model.cpp
 
 CMakeFiles/model.dir/model.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/model.dir/model.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Roll/Desktop/mylarSimulator/model.cpp > CMakeFiles/model.dir/model.cpp.i
+	/usr/local/opt/llvm/bin/clang $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Roll/Desktop/mylarSimulator/model.cpp > CMakeFiles/model.dir/model.cpp.i
 
 CMakeFiles/model.dir/model.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/model.dir/model.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Roll/Desktop/mylarSimulator/model.cpp -o CMakeFiles/model.dir/model.cpp.s
+	/usr/local/opt/llvm/bin/clang $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Roll/Desktop/mylarSimulator/model.cpp -o CMakeFiles/model.dir/model.cpp.s
 
 # Object files for target model
 model_OBJECTS = \

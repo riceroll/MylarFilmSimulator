@@ -131,17 +131,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named geodesy
+# Target rules for targets named preprocessor
 
 # Build rule for target.
-geodesy: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 geodesy
-.PHONY : geodesy
+preprocessor: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preprocessor
+.PHONY : preprocessor
 
 # fast build rule for target.
-geodesy/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/geodesy.dir/build.make CMakeFiles/geodesy.dir/build
-.PHONY : geodesy/fast
+preprocessor/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/preprocessor.dir/build.make CMakeFiles/preprocessor.dir/build
+.PHONY : preprocessor/fast
+
+#=============================================================================
+# Target rules for targets named mylar
+
+# Build rule for target.
+mylar: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mylar
+.PHONY : mylar
+
+# fast build rule for target.
+mylar/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylar.dir/build.make CMakeFiles/mylar.dir/build
+.PHONY : mylar/fast
 
 #=============================================================================
 # Target rules for targets named model
@@ -196,17 +209,57 @@ imgui/fast:
 .PHONY : imgui/fast
 
 #=============================================================================
-# Target rules for targets named ShapeOp
+# Target rules for targets named tetgen
 
 # Build rule for target.
-ShapeOp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ShapeOp
-.PHONY : ShapeOp
+tetgen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tetgen
+.PHONY : tetgen
 
 # fast build rule for target.
-ShapeOp/fast:
-	$(MAKE) $(MAKESILENT) -f lib/libShapeOp/CMakeFiles/ShapeOp.dir/build.make lib/libShapeOp/CMakeFiles/ShapeOp.dir/build
-.PHONY : ShapeOp/fast
+tetgen/fast:
+	$(MAKE) $(MAKESILENT) -f tetgen/CMakeFiles/tetgen.dir/build.make tetgen/CMakeFiles/tetgen.dir/build
+.PHONY : tetgen/fast
+
+#=============================================================================
+# Target rules for targets named triangle
+
+# Build rule for target.
+triangle: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 triangle
+.PHONY : triangle
+
+# fast build rule for target.
+triangle/fast:
+	$(MAKE) $(MAKESILENT) -f triangle/CMakeFiles/triangle.dir/build.make triangle/CMakeFiles/triangle.dir/build
+.PHONY : triangle/fast
+
+Preprocessor.o: Preprocessor.cpp.o
+
+.PHONY : Preprocessor.o
+
+# target to build an object file
+Preprocessor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/preprocessor.dir/build.make CMakeFiles/preprocessor.dir/Preprocessor.cpp.o
+.PHONY : Preprocessor.cpp.o
+
+Preprocessor.i: Preprocessor.cpp.i
+
+.PHONY : Preprocessor.i
+
+# target to preprocess a source file
+Preprocessor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/preprocessor.dir/build.make CMakeFiles/preprocessor.dir/Preprocessor.cpp.i
+.PHONY : Preprocessor.cpp.i
+
+Preprocessor.s: Preprocessor.cpp.s
+
+.PHONY : Preprocessor.s
+
+# target to generate assembly for a file
+Preprocessor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/preprocessor.dir/build.make CMakeFiles/preprocessor.dir/Preprocessor.cpp.s
+.PHONY : Preprocessor.cpp.s
 
 main.o: main.cpp.o
 
@@ -214,7 +267,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/geodesy.dir/build.make CMakeFiles/geodesy.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylar.dir/build.make CMakeFiles/mylar.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -223,7 +276,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/geodesy.dir/build.make CMakeFiles/geodesy.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylar.dir/build.make CMakeFiles/mylar.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -232,7 +285,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/geodesy.dir/build.make CMakeFiles/geodesy.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylar.dir/build.make CMakeFiles/mylar.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 model.o: model.cpp.o
@@ -270,12 +323,17 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... ShapeOp"
-	@echo "... geodesy"
 	@echo "... glad"
 	@echo "... glfw"
 	@echo "... imgui"
 	@echo "... model"
+	@echo "... mylar"
+	@echo "... preprocessor"
+	@echo "... tetgen"
+	@echo "... triangle"
+	@echo "... Preprocessor.o"
+	@echo "... Preprocessor.i"
+	@echo "... Preprocessor.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
