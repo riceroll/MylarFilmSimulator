@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Release -DALL=ON; -DMODEL=ON; -DMAIN=ON -G "CodeBlocks - Unix Makefiles" /Users/Roll/Desktop/mylarSimulator
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Release -DALL=ON; -DMODEL=ON; -DMAIN=ON -G "CodeBlocks - Unix Makefiles" /Users/Roll/Desktop/mylar-code/mylarSimulator
 -- The C compiler identification is AppleClang 12.0.0.12000032
 -- The CXX compiler identification is AppleClang 12.0.0.12000032
 -- Check for working C compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc
@@ -26,12 +26,8 @@ Clang.
 -- Creating target: igl::opengl_glfw (igl_opengl_glfw)
 -- Using Cocoa for window creation
 -- Creating target: igl::opengl_glfw_imgui (igl_opengl_glfw_imgui)
-Cloning into 'tetgen'...
-HEAD is now at c63e7a6 Fix a stack-buffer overflow in predicates.cxx
 -- Creating target: igl::tetgen (igl_tetgen)
-Cloning into 'triangle'...
-HEAD is now at d284c4a Avoid symbol collision with predicates (https://github.com/libigl/libigl/issues/1168).
 -- Creating target: igl::triangle (igl_triangle)
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/Roll/Desktop/mylarSimulator/cmake-build-release
+-- Build files have been written to: /Users/Roll/Desktop/mylar-code/mylarSimulator/cmake-build-release

@@ -6,6 +6,9 @@
 #include <iostream>
 
 Preprocessor::Preprocessor() {
+
+
+
   Eigen::MatrixXd V;
   Eigen::MatrixXi E;
   Eigen::MatrixXd H;
@@ -19,9 +22,10 @@ Preprocessor::Preprocessor() {
   E << 0,1, 1,2, 2,3, 3,0;
   H.resize(0,2);
   // Triangulate the interior
-  igl::triangle::triangulate(V,E,H,"a0.01q",V2,F2);
+//  igl::triangle::triangulate(V,E,H,"a0.01q",V2,F2);
 
-  std::cout<<"hehe";
+
+
 
 
 
@@ -33,4 +37,4 @@ Preprocessor::Preprocessor() {
 
 }
 
-void Preprocessor::test() {std::cout<<"22222222";}
+void Preprocessor::test() {}

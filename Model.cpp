@@ -12,12 +12,20 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
 
   this->damping = 0.99;
   this->dampingFactor = 0.2;
-  this->paused = false;
+  this->paused = true;
 
   this->viewer =viewer;
 
   this->V = V;
-  this->V += Eigen::MatrixXd::Random(V.rows(), V.cols()) * 0.1;
+  this->V.col(0) = this->V.col(0).array() - this->V.col(0).mean();
+  this->V.col(1) = this->V.col(1).array() - this->V.col(1).mean();
+  this->V.col(2) = this->V.col(2).array() - this->V.col(2).mean();
+  double x_max = max(abs(V.col(0).maxCoeff()), abs(V.col(0).minCoeff()));
+  double y_max = max(abs(V.col(1).maxCoeff()), abs(V.col(1).minCoeff()));
+  double z_max = max(abs(V.col(2).maxCoeff()), abs(V.col(2).minCoeff()));
+  this->V /= max(max(x_max, y_max), z_max);
+  this->V *= 50;
+  this->V += Eigen::MatrixXd::Random(V.rows(), V.cols()) * 0.01;
   this->F = F;
 
 

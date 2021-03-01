@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/Roll/Desktop/mylarSimulator/model.cpp" "/Users/Roll/Desktop/mylarSimulator/cmake-build-release/CMakeFiles/model.dir/model.cpp.o"
+  "/Users/Roll/Desktop/mylar-code/mylarSimulator/model.cpp" "/Users/Roll/Desktop/mylar-code/mylarSimulator/cmake-build-release/CMakeFiles/model.dir/model.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
@@ -31,9 +31,9 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/Roll/Desktop/mylarSimulator/cmake-build-release/imgui/CMakeFiles/imgui.dir/DependInfo.cmake"
-  "/Users/Roll/Desktop/mylarSimulator/cmake-build-release/glfw/src/CMakeFiles/glfw.dir/DependInfo.cmake"
-  "/Users/Roll/Desktop/mylarSimulator/cmake-build-release/glad/CMakeFiles/glad.dir/DependInfo.cmake"
+  "/Users/Roll/Desktop/mylar-code/mylarSimulator/cmake-build-release/imgui/CMakeFiles/imgui.dir/DependInfo.cmake"
+  "/Users/Roll/Desktop/mylar-code/mylarSimulator/cmake-build-release/glfw/src/CMakeFiles/glfw.dir/DependInfo.cmake"
+  "/Users/Roll/Desktop/mylar-code/mylarSimulator/cmake-build-release/glad/CMakeFiles/glad.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

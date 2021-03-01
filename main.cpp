@@ -1,25 +1,9 @@
 #include <iostream>
-#include <fstream>
-#include <vector>
-#include <map>
-#include <set>
-#include <queue>
-#include <cmath>
-#include <ctime>
 #include <algorithm>
-#include <thread>
-#include <string>
-#include <boost/algorithm/string/classification.hpp> // Include boost::for is_any_of
-#include <boost/algorithm/string/split.hpp> // Include for boost::split
 
 #include <imgui/imgui.h>
 #include <igl/opengl/glfw/Viewer.h>
 #include <igl/opengl/glfw/imgui/ImGuiMenu.h>
-#include <igl/ray_mesh_intersect.h>
-#include <igl/unproject_ray.h>
-//#include <igl/heat_geodesics.h>
-//#include <igl/upsample.h>
-//#include <igl/colormap.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"

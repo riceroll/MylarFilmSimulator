@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++17 -stdlib=libc++ -Wall -g -fPIC -O3 -DNDEBUG -isysroot /App
 
 CXX_DEFINES = -DIMGUI_IMPL_OPENGL_LOADER_GLAD
 
-CXX_INCLUDES = -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/libigl-imgui/../imgui -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/libigl-imgui/. -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/libigl-imgui/.. -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/libigl-imgui/../imgui/examples -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/glad/include -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/glfw/include 
+CXX_INCLUDES = -I/Users/Roll/Desktop/mylar-code/mylarSimulator/lib/libigl/external/libigl-imgui/../imgui -I/Users/Roll/Desktop/mylar-code/mylarSimulator/lib/libigl/external/libigl-imgui/. -I/Users/Roll/Desktop/mylar-code/mylarSimulator/lib/libigl/external/libigl-imgui/.. -I/Users/Roll/Desktop/mylar-code/mylarSimulator/lib/libigl/external/libigl-imgui/../imgui/examples -I/Users/Roll/Desktop/mylar-code/mylarSimulator/lib/libigl/external/glad/include -I/Users/Roll/Desktop/mylar-code/mylarSimulator/lib/libigl/external/glfw/include 
 

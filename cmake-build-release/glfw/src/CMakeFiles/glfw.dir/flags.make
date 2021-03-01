@@ -6,7 +6,7 @@ C_FLAGS =  -fPIC -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Develop
 
 C_DEFINES = -D_GLFW_USE_CONFIG_H
 
-C_INCLUDES = -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/glfw/include -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/glfw/src -I/Users/Roll/Desktop/mylarSimulator/cmake-build-release/glfw/src 
+C_INCLUDES = -I/Users/Roll/Desktop/mylar-code/mylarSimulator/lib/libigl/external/glfw/include -I/Users/Roll/Desktop/mylar-code/mylarSimulator/lib/libigl/external/glfw/src -I/Users/Roll/Desktop/mylar-code/mylarSimulator/cmake-build-release/glfw/src 
 
 # Custom flags: glfw/src/CMakeFiles/glfw.dir/context.c.o_FLAGS = -Wdeclaration-after-statement
 

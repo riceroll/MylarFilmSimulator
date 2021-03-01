@@ -6,5 +6,5 @@ C_FLAGS =  -fPIC -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Develop
 
 C_DEFINES = 
 
-C_INCLUDES = -I/Users/Roll/Desktop/mylarSimulator/lib/libigl/external/glad/include 
+C_INCLUDES = -I/Users/Roll/Desktop/mylar-code/mylarSimulator/lib/libigl/external/glad/include 
 
