@@ -29,6 +29,7 @@ mkdir build
 cd build
 cmake ..
 make
+cd ..
 ```
 
 ### 3. Run

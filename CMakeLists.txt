@@ -79,13 +79,9 @@ option(LIBIGL_WITH_XML               "Use XML"            OFF)
 
 find_package(LIBIGL REQUIRED QUIET)
 
-add_subdirectory(./lib/CDT/CDT CDT)
-
 include_directories("./include/")
 include_directories("./include/boost/")
-include_directories("./lib/libShapeOp/src")
 include_directories("./lib/libigl/external/triangle")
-include_directories("./lib/CDT/CDT/include")
 
 # ============================= linking ===============================
 
