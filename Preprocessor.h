@@ -7,13 +7,11 @@
 
 # include <igl/triangle/triangulate.h>
 # include <string>
-
+# include <iostream>
 
 class Preprocessor {
 public:
-  Preprocessor();
-
-  void test();
+  Preprocessor(std::string file_dir, std::string root_dir);
 
 };
 

@@ -79,9 +79,13 @@ option(LIBIGL_WITH_XML               "Use XML"            OFF)
 
 find_package(LIBIGL REQUIRED QUIET)
 
+add_subdirectory(./lib/CDT/CDT CDT)
+
 include_directories("./include/")
+include_directories("./include/boost/")
 include_directories("./lib/libShapeOp/src")
 include_directories("./lib/libigl/external/triangle")
+include_directories("./lib/CDT/CDT/include")
 
 # ============================= linking ===============================
 
@@ -97,13 +101,11 @@ add_library(model SHARED model.cpp)
 target_link_libraries(model  igl::core igl::opengl_glfw_imgui)
 
 add_library(preprocessor SHARED Preprocessor.cpp)
-target_link_libraries(preprocessor  igl::triangle)
+target_link_libraries(preprocessor igl::triangle)
 
 add_executable(${PROJECT_NAME}  main.cpp)
+target_compile_definitions(${PROJECT_NAME} PRIVATE ROOT_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(${PROJECT_NAME}  igl::core igl::opengl_glfw_imgui)
 target_link_libraries(${PROJECT_NAME}  model)
 target_link_libraries(${PROJECT_NAME}  preprocessor)
-
-
-
 

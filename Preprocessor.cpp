@@ -1,40 +1,40 @@
 //
 // Created by 莱洛 on 2021/2/26.
 //
-
 #include "Preprocessor.h"
+//#include <svgpp/policy/xml/rapidxml_ns.hpp>
+
+#include <cstdio>
 #include <iostream>
-
-Preprocessor::Preprocessor() {
-
-
-
-  Eigen::MatrixXd V;
-  Eigen::MatrixXi E;
-  Eigen::MatrixXd H;
-  std::string flags;
-  Eigen::MatrixXd V2;
-  Eigen::MatrixXi F2;
-
-  V.resize(4,2);
-  V << -1,-1, 1,-1, 1,1, -1,1;
-  E.resize(4,2);
-  E << 0,1, 1,2, 2,3, 3,0;
-  H.resize(0,2);
-  // Triangulate the interior
-//  igl::triangle::triangulate(V,E,H,"a0.01q",V2,F2);
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <array>
 
 
+using namespace std;
 
-
-
-
-//  igl::triangle::triangulate(V, E, H, flags, V2, F2);
-
-
-
-
-
+std::string exec(const char* cmd) {
+  std::array<char, 128> buffer;
+  std::string result;
+  std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+  if (!pipe) {
+    throw std::runtime_error("popen() failed!");
+  }
+  while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+    result += buffer.data();
+  }
+  return result;
 }
 
-void Preprocessor::test() {}
+Preprocessor::Preprocessor(string file_dir, string root_dir) {
+
+  string python_dir = root_dir + "preprocess.py";
+  string command = "run " + python_dir + " " + file_dir + " " + root_dir;
+  cout<<command<<endl;
+  char buff[100];
+  strcpy(buff, command.c_str());
+//  string result = exec(buff);
+
+  std::system(command.c_str());
+}

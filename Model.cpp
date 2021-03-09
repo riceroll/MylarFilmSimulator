@@ -8,15 +8,18 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
   this->k_s = 2;
   this->k_e = 0.005;
   this->k_b = 0.1;
-  this->h = 0.5;
+  this->h = 0.1;
 
   this->damping = 0.99;
-  this->dampingFactor = 0.2;
+  this->damping_coeff = 0.2;
   this->paused = true;
 
   this->viewer =viewer;
 
   this->V = V;
+  this->F = F;
+
+  // pre-normalize
   this->V.col(0) = this->V.col(0).array() - this->V.col(0).mean();
   this->V.col(1) = this->V.col(1).array() - this->V.col(1).mean();
   this->V.col(2) = this->V.col(2).array() - this->V.col(2).mean();
@@ -25,14 +28,12 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
   double z_max = max(abs(V.col(2).maxCoeff()), abs(V.col(2).minCoeff()));
   this->V /= max(max(x_max, y_max), z_max);
   this->V *= 50;
-  this->V += Eigen::MatrixXd::Random(V.rows(), V.cols()) * 0.01;
-  this->F = F;
+  this->V += Eigen::MatrixXd::Random(V.rows(), V.cols()) * 1e-5;
 
-
-  set<tuple<int, int>> E;
+  set<tuple<int, int>> Edges;
   auto add_edge = [&](int i, int j) {
-    if (E.count(make_tuple(i, j)) != 1 and E.count(make_tuple(j, i)) != 1 ) {
-      E.insert(make_tuple(i, j));
+    if (not (Edges.count(make_tuple(i, j)) or Edges.count(make_tuple(j, i))) ) {
+      Edges.insert(make_tuple(i, j));
     }
   };
   for (int i=0; i<this->F.rows(); i++) {
@@ -42,18 +43,20 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
     add_edge(face(2), face(0));
   }
 
-  this->E.resize(E.size(), 2);
+  this->E.resize(Edges.size(), 2);
 
   int ie = 0;
-  for (auto e : E) {
+  for (auto e : Edges) {
     this->E.row(ie) << get<0>(e), get<1>(e);
     ie++;
   }
 
   this->Vel = this->V * 0;
+  this->Acc = this->V * 0;
   this->Force = this->V * 0;
   this->L0.resize(this->E.rows(), 1);
 
+  cout<<"Computing initial lengths..."<<endl;
   for (int i=0; i<this->E.rows(); i++) {
     auto v0 = this->V.row(this->E(i, 0));
     auto v1 = this->V.row(this->E(i, 1));
@@ -63,9 +66,17 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
     this->L0(i) = l;
   }
 
-  // assembly
-  // assembly for hinge constraint
+  // pre-assembly
+
+  // mass-matrix with barycentric coordinate
+  cout<<"Computing mass matrix..."<<endl;
+  Eigen::SparseMatrix<double> Mass;
+  igl::massmatrix<Eigen::MatrixXd, Eigen::MatrixXi, double>(V, F, igl::MASSMATRIX_TYPE_BARYCENTRIC, Mass);
+  this->M = Mass.diagonal();
+
+  // pre-assembly for hinge constraint
   {
+    cout<<"Emplacing faces.."<<endl;
     vector<set<int>> face_sets;
     for (int i = 0; i < this->F.rows(); i++) {
       set<int> face;
@@ -88,6 +99,7 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
       return third_vs;
     };
 
+    cout<<"Pre-assembing matrices..."<<endl;
     for (int i = 0; i < this->E.rows(); i++) {
       int iv_i = this->E(i, 0);
       int iv_j = this->E(i, 1);
@@ -117,6 +129,8 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
       this->ivs_l.emplace_back(iv_l);
     }
 
+    cout<<"Precomputing done."<<endl;
+
   }
 
 }
@@ -126,6 +140,9 @@ void Model::step() {
   if (this->paused) {
     return;
   }
+//  this->paused = true;
+
+  viewer->data().clear_labels();
 
   this->Force *= 0;
 
@@ -137,12 +154,17 @@ void Model::step() {
     auto v1 = this->V.row(iv1);
 
     double l = (v0-v1).norm();
-    double f_edge = (l - this->L0(i)) * this->k_s;  // compressive_stress
+    double f_edge = (l - this->L0(i)) / this->L0(i) * this->k_s;  // compressive_stress
 
     Eigen::RowVector3d f = (v1 - v0).normalized() * f_edge;
 
     this->Force.row(iv0) += f;
     this->Force.row(iv1) -= f;
+
+//    if (this->show_edge_force) {
+//      viewer->data().add_label((v0 + v1) / 2, to_string(f.norm()));
+//    }
+
   }
 
   // hinge force
@@ -205,11 +227,14 @@ void Model::step() {
     for (int j=0; j<this->V.rows(); j++) {
       if (i == j) continue;
 
-      auto v0 = this->V.row(i);
-      auto v1 = this->V.row(j);
+      Eigen::RowVector3d v0 = this->V.row(i);
+      Eigen::RowVector3d v1 = this->V.row(j);
+      double area0 = this->M(i);
+      double area1 = this->M(j);
+
       double d = (v0-v1).norm();
-      double q0 = 1;
-      double q1 = 1;
+      double q0 = area0;
+      double q1 = area1;
       double f_electrostatic = q0 * q1 * this->k_e / d / d;
 
       Eigen::RowVector3d f = (v1 - v0).normalized() * f_electrostatic;
@@ -221,12 +246,38 @@ void Model::step() {
 
   // damping force
   for (int i=0; i<this->V.rows(); i++) {
-    this->Force.row(i) += -this->Vel.row(i) * this->Vel.row(i).norm() * this->dampingFactor;
+    this->Force.row(i) += -this->Vel.row(i) * this->Vel.row(i).norm() * this->damping_coeff;
+    while (this->Force.row(i).norm() > 1) {
+      this->Force.row(i) *= 0.8;
+    }
   }
 
   this->Vel += this->Force * this->h;
+
   this->Vel *= this->damping;
+
   this->V += this->Vel * this->h;
+
+
+  double maxVel = 0;
+  for (int i=0; i<this->Vel.rows(); i++) {
+    double vel =this->Vel.row(i).norm();
+    if (vel > maxVel) maxVel = vel;
+  }
+
+  if (maxVel < 0.4) {
+    this->k_s = 6;
+    this->h = 0.25;
+    this->k_b = 0.2;
+    this->k_e = 0.01;
+  }
+  else {
+    this->k_s = 2;
+    this->k_e = 0.005;
+    this->k_b = 0.2;
+    this->h = 0.1;
+  }
+
 
 
 }

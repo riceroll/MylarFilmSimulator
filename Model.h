@@ -11,6 +11,7 @@
 #include <tuple>
 
 #include <Eigen/Core>
+//#include "tqdm/tqdm.h"
 
 #include <igl/opengl/glfw/Viewer.h>
 
@@ -26,8 +27,10 @@ public:
   Eigen::MatrixXi F;
 
   Eigen::MatrixXd Vel;
+  Eigen::MatrixXd Acc;
   Eigen::MatrixXd Force;
   Eigen::MatrixXd L0;
+  Eigen::VectorXd M; // mass vector
 
   igl::opengl::glfw::Viewer* viewer;
 
@@ -36,8 +39,15 @@ public:
   double k_b;   // k_bending
   double h;
   double damping;
-  double dampingFactor;
+  double damping_coeff;
   bool paused;
+
+  bool show_edge_force = false;
+  bool show_electrostatic_force = false;
+  bool show_bending_force_i =false;
+  bool show_bending_force_j =false;
+  bool show_bending_force_k =false;
+  bool show_bending_force_l =false;
 
   // pre-assembled variables
   vector<int> ivs_i;

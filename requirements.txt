@@ -1,0 +1,4 @@
+svgpathtools=1.4.1
+numpy=1.18.1
+triangle==20200424
+pymesh=1.0.2
