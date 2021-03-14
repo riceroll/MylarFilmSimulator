@@ -36,7 +36,7 @@ cd ..
 ```bash
 sh ./run.sh [svg_dir] [resolution] [seam_width]
 ```
-replace "[svg_dir]" with directory to the svg,
+replace "[svg_dir]" with directory to the svg file,
 replace "[resolution]" with the ideal length of triangle edge (default 2),
 replace "[seam_width]" with the ideal seam width (default 1).
 
