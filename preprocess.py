@@ -174,6 +174,7 @@ def is_file_changed(file_name):
 while True:
     time.sleep(.5)
     if is_file_changed(name):
+        print("Preprocess with resolution: {}, seamWidth: {}, triResolution: {}".format(resolution, seamWidth, triResolution))
         preprocess(name, resolution, seamWidth, triResolution)
 
 

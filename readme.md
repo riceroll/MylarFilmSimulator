@@ -42,7 +42,7 @@ sh ./run.sh [svg_dir] [resolution] [seam_width]
 
 #### Example:
 ```bash
-sh run.sh ./data/svg/rose.svg 2 0.1
+sh run.sh ./data/svg/rose.svg 8 0.1
 ```
-The above script will load a rose pattern, with 2 as triangle edge length and 0.1 as the width of the seams(non-closed curve) on the rose.
+The above script will load a rose pattern, with 8 as triangle edge length and 0.1 as the width of the seams(non-closed curve) on the rose.
 
