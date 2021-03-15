@@ -36,12 +36,13 @@ cd ..
 ```bash
 sh ./run.sh [svg_dir] [resolution] [seam_width]
 ```
-replace "[svg_dir]" with directory to the svg file,
-replace "[resolution]" with the ideal length of triangle edge (default 2),
-replace "[seam_width]" with the ideal seam width (default 1).
+- Replace "[svg_dir]" with directory to the svg file. 
+- Replace "[resolution]" with the ideal length of triangle edge (default 2).
+- Replace "[seam_width]" with the ideal seam width (default 1).
 
-Example:
+#### Example:
 ```bash
-sh run.sh ./data/svg/rose-222.svg 2 0.1
+sh run.sh ./data/svg/rose.svg 2 0.1
 ```
+The above script will load a rose pattern, with 2 as triangle edge length and 0.1 as the width of the seams(non-closed curve) on the rose.
 
