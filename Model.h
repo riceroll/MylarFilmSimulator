@@ -20,7 +20,6 @@ using namespace std;
 
 class Model {
 
-
 public:
   Eigen::MatrixXd V;
   Eigen::MatrixXi E;
@@ -56,6 +55,7 @@ public:
   vector<int> ivs_l;
 
   Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* viewer);
+  Model();
 
   void step();
 

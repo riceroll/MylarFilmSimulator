@@ -4,6 +4,9 @@
 
 #include "Model.h"
 
+Model::Model() {
+}
+
 Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* viewer) {
   this->k_s = 2;
   this->k_e = 0.005;
@@ -21,7 +24,7 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
 
   // pre-normalize
   this->V.col(0) = this->V.col(0).array() - this->V.col(0).mean();
-  this->V.col(1) = this->V.col(1).array() - this->V.col(1).mean();
+  this->V.col(1) = -(this->V.col(1).array() - this->V.col(1).mean());
   this->V.col(2) = this->V.col(2).array() - this->V.col(2).mean();
   double x_max = max(abs(V.col(0).maxCoeff()), abs(V.col(0).minCoeff()));
   double y_max = max(abs(V.col(1).maxCoeff()), abs(V.col(1).minCoeff()));

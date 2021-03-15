@@ -2,11 +2,6 @@ cmake_minimum_required(VERSION 3.1)
 project(mylar)
 
 #Versioning
-set(SHAPEOP_VERSION_MAJOR 0)
-set(SHAPEOP_VERSION_MINOR 1)
-set(SHAPEOP_VERSION_PATCH 0)
-set(SHAPEOP_VERSION_STRING ${SHAPEOP_VERSION_MAJOR}.${SHAPEOP_VERSION_MINOR}.${SHAPEOP_VERSION_PATCH})
-
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -14,7 +9,6 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-
 
 #Tests for Clang and AppleClang which is defined in CMake 3.0 and higher
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -51,12 +45,6 @@ else()
   message( FATAL_ERROR "CXX compiler not recognized. CMake will quit." )
 endif()
 
-
-# options global
-option(MAIN              "compile main"           ON)
-option(MODEL           "compile model"            ON)
-option(ALL             "compile all"              ON)
-
 # libigl
 option(LIBIGL_USE_STATIC_LIBRARY "Use libigl as static library" OFF)
 option(LIBIGL_WITH_ANTTWEAKBAR       "Use AntTweakBar"    OFF)
@@ -81,7 +69,7 @@ find_package(LIBIGL REQUIRED QUIET)
 
 include_directories("./include/")
 include_directories("./include/boost/")
-include_directories("./lib/libigl/external/triangle")
+#include_directories("./lib/libigl/external/triangle")
 
 # ============================= linking ===============================
 
@@ -90,8 +78,9 @@ set(CMAKE_CXX_COMPILER "/usr/local/opt/llvm/bin/clang")
 # enable openmp, enable c++ std library, enable o3 optimization level
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -lc++ -o3")
 # link openmp in llvm
-# TODO: this should be avoided: https://cmake.org/cmake/help/latest/command/link_directories.html
+# TODO: link_directories should be avoided: https://cmake.org/cmake/help/latest/command/link_directories.html
 link_directories("/usr/local/opt/llvm/lib")
+
 
 add_library(model SHARED model.cpp)
 target_link_libraries(model  igl::core igl::opengl_glfw_imgui)
