@@ -158,6 +158,10 @@ def preprocess(file_name, reso, seam_w, tri_reso):
     ms.invert_faces_orientation()
 
     ms.save_current_mesh("./data/out.obj")
+    # save time stamp
+    with open('./data/timestamp', 'w') as ofile:
+        ofile.write(str(int(time.time())))
+
     print("Done preprocessing...")
 
 

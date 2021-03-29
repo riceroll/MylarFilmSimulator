@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 
 #include <imgui/imgui.h>
@@ -7,6 +8,7 @@
 
 // Mylar
 #include "Model.h"
+#include "Utils.h"
 
 using namespace std;
 
@@ -47,12 +49,20 @@ int main(int argc, char **argv) {
   Eigen::MatrixXd NF; //per-face normal
 
   auto* model = new Model();
+  auto* utils = new Utils();
+  unsigned int last_modified_time = utils->last_modified_time("./data/timestamp");
 
   // load initial model
   loadModel(viewer, V, F, NF, model);
 
   // callback
   viewer.callback_post_draw = [&](igl::opengl::glfw::Viewer& viewer)->bool {
+    if (last_modified_time != utils->last_modified_time("./data/timestamp")) {
+      std::cout<<"C++ detected model modification"<<std::endl;
+      loadModel(viewer, V, F, NF, model);
+      last_modified_time = utils->last_modified_time("./data/timestamp");
+    }
+
     model->step();
     viewer.data().set_mesh(model->V,model->F);
     return true;
@@ -114,9 +124,9 @@ int main(int argc, char **argv) {
       model->paused = true;
     }
 
-    if (ImGui::Button("Simulate")) {
-      loadModel(viewer, V, F, NF, model);
-    }
+//    if (ImGui::Button("Simulate")) {
+//      loadModel(viewer, V, F, NF, model);
+//    }
 
     static int num_choices = 0;
     if (ImGui::InputInt("Num letters", &num_choices))

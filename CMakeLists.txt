@@ -82,7 +82,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -lc++ -o3")
 link_directories("/usr/local/opt/llvm/lib")
 
 
-add_library(model SHARED model.cpp)
+add_library(model SHARED model.cpp Utils.cpp Utils.h)
 target_link_libraries(model  igl::core igl::opengl_glfw_imgui)
 
 add_library(preprocessor SHARED Preprocessor.cpp)
