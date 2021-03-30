@@ -40,6 +40,7 @@ public:
   double damping;
   double damping_coeff;
   bool paused;
+  int steps_per_frame;
 
   bool show_edge_force = false;
   bool show_electrostatic_force = false;
@@ -57,7 +58,7 @@ public:
   Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* viewer);
   Model();
 
-  void step();
+  void step(int n);
 
 
 };

@@ -63,8 +63,12 @@ int main(int argc, char **argv) {
       last_modified_time = utils->last_modified_time("./data/timestamp");
     }
 
-    model->step();
+
+    viewer.data().clear_labels();
+
+    model->step(model->steps_per_frame);
     viewer.data().set_mesh(model->V,model->F);
+    viewer.data().compute_normals();
     return true;
   };
 
@@ -89,7 +93,7 @@ int main(int argc, char **argv) {
 //      std::string input_dir = igl::file_dialog_open();
 //      string root_dir = ROOT_DIR;
 //      root_dir += '/';
-//      Preprocessor p = Preprocessor(input_dir, root_dir);
+//      Pre processor p = Preprocessor(input_dir, root_dir);
 //      igl::readOBJ(root_dir + "data/out.obj", V, F);
 //      model = new Model(V, F, &viewer);
 //      viewer.data().clear();
@@ -115,6 +119,7 @@ int main(int argc, char **argv) {
     ImGui::InputDouble("damping", &model->damping);
     ImGui::InputDouble("damping factor", &model->damping_coeff);
     ImGui::InputDouble("step size", &model->h);
+    ImGui::InputInt("steps per frame", &model->steps_per_frame);
 
     if (ImGui::Button("begin")) {
       model->paused = false;
