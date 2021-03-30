@@ -109,74 +109,74 @@ int main(int argc, char **argv) {
     }
 
     ImGui::Begin(
-      "New Window", nullptr,
+      "Setting", nullptr,
       ImGuiWindowFlags_NoSavedSettings
     );
 
-    ImGui::InputDouble("tensile factor", &model->k_s);
-    ImGui::InputDouble("dielectric factor", &model->k_e);
-    ImGui::InputDouble("bending factor", &model->k_b);
-    ImGui::InputDouble("damping", &model->damping);
-    ImGui::InputDouble("damping factor", &model->damping_coeff);
+    ImGui::InputDouble("tensile factor", &model->k_s, 0.001, 0.01, "%.3g");
+    ImGui::InputDouble("dielectric factor", &model->k_e, 0.001, 0.01, "%.3g");
+    ImGui::InputDouble("bending factor", &model->k_b, 0.001, 0.01, "%.3g");
+    ImGui::InputDouble("damping", &model->damping, 0.001, 0.01, "%.3g");
+    ImGui::InputDouble("damping factor", &model->damping_coeff, 0.001, 0.01, "%.3g");
     ImGui::InputDouble("step size", &model->h);
     ImGui::InputInt("steps per frame", &model->steps_per_frame);
 
-    if (ImGui::Button("begin")) {
-      model->paused = false;
-    }
-
-    if (ImGui::Button("paused")) {
-      model->paused = true;
-    }
-
-//    if (ImGui::Button("Simulate")) {
-//      loadModel(viewer, V, F, NF, model);
+//    if (ImGui::Button("begin")) {
+//      model->paused = false;
+//    }
+//
+//    if (ImGui::Button("paused")) {
+//      model->paused = true;
 //    }
 
-    static int num_choices = 0;
-    if (ImGui::InputInt("Num letters", &num_choices))
-    {
-      model->show_bending_force_i = false;
-      model->show_bending_force_j = false;
-      model->show_bending_force_k = false;
-      model->show_bending_force_l = false;
-      model->show_edge_force = false;
-      model->show_electrostatic_force = false;
-
-
-      switch(num_choices) {
-
-        case 0 :
-          model->show_bending_force_i = true;
-          break;
-
-        case 1 :
-          model->show_bending_force_j = true;
-          break;
-
-        case 2 :
-          model->show_bending_force_k = true;
-          break;
-
-        case 3 :
-          model->show_bending_force_l = true;
-          break;
-
-        case 4 :
-          model->show_electrostatic_force = true;
-          break;
-
-        case 5 :
-          model->show_edge_force = true;
-          break;
-
-        default :
-          cout<<"default"<<endl;
-          break;
-
-      }
-
+    if (ImGui::Button("Reset")) {
+      loadModel(viewer, V, F, NF, model);
     }
+
+    static int num_choices = 0;
+//    if (ImGui::InputInt("Num letters", &num_choices))
+//    {
+//      model->show_bending_force_i = false;
+//      model->show_bending_force_j = false;
+//      model->show_bending_force_k = false;
+//      model->show_bending_force_l = false;
+//      model->show_edge_force = false;
+//      model->show_electrostatic_force = false;
+//
+//
+//      switch(num_choices) {
+//
+//        case 0 :
+//          model->show_bending_force_i = true;
+//          break;
+//
+//        case 1 :
+//          model->show_bending_force_j = true;
+//          break;
+//
+//        case 2 :
+//          model->show_bending_force_k = true;
+//          break;
+//
+//        case 3 :
+//          model->show_bending_force_l = true;
+//          break;
+//
+//        case 4 :
+//          model->show_electrostatic_force = true;
+//          break;
+//
+//        case 5 :
+//          model->show_edge_force = true;
+//          break;
+//
+//        default :
+//          cout<<"default"<<endl;
+//          break;
+//
+//      }
+//
+//    }
 
     ImGui::End();
   };

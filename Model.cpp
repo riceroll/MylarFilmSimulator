@@ -16,7 +16,7 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
 
   this->damping = 0.99;
   this->damping_coeff = 0.2;
-  this->paused = true;
+  this->paused = false;
 
   this->viewer =viewer;
 
@@ -267,17 +267,18 @@ void Model::step(int n) {
       if (vel > maxVel) maxVel = vel;
     }
 
-    if (maxVel < 0.4) {
-      this->k_s = 6;
-      this->h = 0.25;
-      this->k_b = 0.2;
-      this->k_e = 0.01;
-    } else {
-      this->k_s = 2;
-      this->k_e = 0.005;
-      this->k_b = 0.2;
-      this->h = 0.1;
-    }
+//    if (maxVel < 0.4) {
+//      this->k_s = 6;
+//      this->h = 0.25;
+//      this->k_b = 0.2;
+//      this->k_e = 0.01;
+//    } else {
+//      this->k_s = 2;
+//      this->k_e = 0.005;
+//      this->k_b = 0.2;
+//      this->h = 0.1;
+//    }
+
   }
 
 
