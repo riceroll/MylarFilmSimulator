@@ -63,8 +63,11 @@ int main(int argc, char **argv) {
       last_modified_time = utils->last_modified_time("./data/timestamp");
     }
 
-
     viewer.data().clear_labels();
+
+    model->camera_rad += model->rad_per_frame;
+    viewer.core().camera_eye.z() = sin(model->camera_rad) * model->camera_radius;
+    viewer.core().camera_eye.x() = cos(model->camera_rad) * model->camera_radius;
 
     model->step(model->steps_per_frame);
     viewer.data().set_mesh(model->V,model->F);
@@ -120,6 +123,7 @@ int main(int argc, char **argv) {
     ImGui::InputDouble("damping factor", &model->damping_coeff, 0.001, 0.01, "%.3g");
     ImGui::InputDouble("step size", &model->h);
     ImGui::InputInt("steps per frame", &model->steps_per_frame);
+    ImGui::InputFloat("rad per frame", &model->rad_per_frame, 0.01, 0.1, "%.2g");
 
 //    if (ImGui::Button("begin")) {
 //      model->paused = false;

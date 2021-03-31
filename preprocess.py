@@ -26,7 +26,25 @@ lastProcessingTime = -1
 
 def preprocess(file_name, reso, seam_w, tri_reso):
     gap = reso     # mm
-    paths, attributes, svg_attributes = svg2paths2(file_name)
+
+    file_name_new = file_name.split('.')[0] + "_ext.svg"
+    with open(file_name) as ifile:
+        content = ifile.read()
+
+    while True:
+        g0 = content.find('<g')
+        g1 = content.find('/g>') + 3
+
+        if g0 == -1:
+            print('g0')
+            break
+
+        content = content[:g0] + content[g1:]
+
+    with open(file_name_new, 'w') as ofile:
+        ofile.write(content)
+
+    paths, attributes, svg_attributes = svg2paths2(file_name_new)
 
     vs = []
     es = []

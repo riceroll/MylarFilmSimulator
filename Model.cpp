@@ -8,16 +8,6 @@ Model::Model() {
 }
 
 Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* viewer) {
-  this->k_s = 2;
-  this->k_e = 0.005;
-  this->k_b = 0.1;
-  this->h = 0.1;
-  this->steps_per_frame = 10;
-
-  this->damping = 0.99;
-  this->damping_coeff = 0.2;
-  this->paused = false;
-
   this->viewer =viewer;
 
   this->V = V;

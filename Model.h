@@ -9,6 +9,7 @@
 #include <set>
 #include <vector>
 #include <tuple>
+#include <cmath>
 
 #include <Eigen/Core>
 //#include "tqdm/tqdm.h"
@@ -33,14 +34,19 @@ public:
 
   igl::opengl::glfw::Viewer* viewer;
 
-  double k_s;   // k_stress
-  double k_e;   // k_electrostatic
-  double k_b;   // k_bending
-  double h;
-  double damping;
-  double damping_coeff;
-  bool paused;
-  int steps_per_frame;
+  double k_s = 8;   // k_stress
+  double k_e = 0.005;   // k_electrostatic
+  double k_b = 0.1;   // k_bending
+  double h = 0.1;
+  double damping = 0.99;
+  double damping_coeff = 0.2;
+  bool paused = false;
+  int steps_per_frame = 10;
+
+
+  float camera_radius = 5;
+  float camera_rad = M_PI / 2;
+  float rad_per_frame = 0.02;
 
   bool show_edge_force = false;
   bool show_electrostatic_force = false;
