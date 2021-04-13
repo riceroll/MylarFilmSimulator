@@ -28,6 +28,7 @@ void loadModel(igl::opengl::glfw::Viewer& viewer,
   viewer.data().set_mesh(model->V, model->F);
   igl::per_face_normals(model->V, model->F,NF);
   viewer.data().set_normals(NF);
+//  viewer.data().double_sided = true;
 
   Eigen::MatrixXd C = V * 0;
   for (int i=0; i<C.rows(); i++) {
@@ -125,13 +126,13 @@ int main(int argc, char **argv) {
     ImGui::InputInt("steps per frame", &model->steps_per_frame);
     ImGui::InputFloat("rad per frame", &model->rad_per_frame, 0.01, 0.1, "%.2g");
 
-//    if (ImGui::Button("begin")) {
-//      model->paused = false;
-//    }
-//
-//    if (ImGui::Button("paused")) {
-//      model->paused = true;
-//    }
+    if (ImGui::Button("begin")) {
+      model->paused = false;
+    }
+
+    if (ImGui::Button("paused")) {
+      model->paused = true;
+    }
 
     if (ImGui::Button("Reset")) {
       loadModel(viewer, V, F, NF, model);

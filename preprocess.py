@@ -27,7 +27,7 @@ lastProcessingTime = -1
 def preprocess(file_name, reso, seam_w, tri_reso):
     gap = reso     # mm
 
-    file_name_new = file_name.split('.')[0] + "_ext.svg"
+    file_name_new = ".".join(file_name.split('.')[:-1]) + "_ext.svg"
     with open(file_name) as ifile:
         content = ifile.read()
 
@@ -35,16 +35,19 @@ def preprocess(file_name, reso, seam_w, tri_reso):
         g0 = content.find('<g')
         g1 = content.find('/g>') + 3
 
-        if g0 == -1:
-            print('g0')
+        if g0 == -1 or g1 == -1:
+            print('g0 not found or g1 not found')
             break
+        else:
+            print('g0 and g1 found')
 
         content = content[:g0] + content[g1:]
+
 
     with open(file_name_new, 'w') as ofile:
         ofile.write(content)
 
-    paths, attributes, svg_attributes = svg2paths2(file_name_new)
+    paths, attributes, svg_attributes = svg2paths2(file_name)
 
     vs = []
     es = []
@@ -200,7 +203,7 @@ while True:
         preprocess(name, resolution, seamWidth, triResolution)
 
 
-#
+
 # vs = ms.current_mesh().vertex_matrix()
 # fs = ms.current_mesh().face_matrix()
 #

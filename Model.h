@@ -40,7 +40,7 @@ public:
   double h = 0.1;
   double damping = 0.99;
   double damping_coeff = 0.2;
-  bool paused = false;
+  bool paused = true;
   int steps_per_frame = 10;
 
 

@@ -46,3 +46,5 @@ sh run.sh ./data/svg/rose.svg 8 0.1
 ```
 The above script will load a rose pattern, with 8 as triangle edge length and 0.1 as the width of the seams(non-closed curve) on the rose.
 
+The svg can be editted at real-time, the change will be automatically detected and the triangle mesh will be remeshed.
+
