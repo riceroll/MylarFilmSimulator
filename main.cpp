@@ -138,6 +138,13 @@ int main(int argc, char **argv) {
       loadModel(viewer, V, F, NF, model);
     }
 
+    if (ImGui::Button("Download")) {
+      char buff[100];
+      sprintf(buff, "%s/data/download/output.obj", ROOT_DIR);
+      string output_dir = buff;
+      igl::writeOBJ(output_dir, model->V, model->F);
+    }
+
     static int num_choices = 0;
 //    if (ImGui::InputInt("Num letters", &num_choices))
 //    {
