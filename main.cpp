@@ -62,6 +62,8 @@ int main(int argc, char **argv) {
       std::cout<<"C++ detected model modification"<<std::endl;
       loadModel(viewer, V, F, NF, model);
       last_modified_time = utils->last_modified_time("./data/timestamp");
+      model->paused = false;
+
     }
 
     viewer.data().clear_labels();
@@ -189,10 +191,8 @@ int main(int argc, char **argv) {
 //      }
 //
 //    }
-
     ImGui::End();
   };
-
 
   // viewer settings
   viewer.callback_init = [&](igl::opengl::glfw::Viewer& viewer) -> bool {

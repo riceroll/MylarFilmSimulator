@@ -19,6 +19,7 @@ brew upgrade libomp
 
 ```bash
 # Install python dependencies (for svg preprocessing)
+# use pip3 if your pip is binded to python2
 pip install -r requirements.txt
 ```
 

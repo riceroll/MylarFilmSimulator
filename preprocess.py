@@ -36,13 +36,12 @@ def preprocess(file_name, reso, seam_w, tri_reso):
         g1 = content.find('/g>') + 3
 
         if g0 == -1 or g1 == -1:
-            print('g0 not found or g1 not found')
+            print('*** g0 not found or g1 not found')
             break
         else:
-            print('g0 and g1 found')
+            print('*** g0 and g1 found')
 
         content = content[:g0] + content[g1:]
-
 
     with open(file_name_new, 'w') as ofile:
         ofile.write(content)
@@ -85,7 +84,7 @@ def preprocess(file_name, reso, seam_w, tri_reso):
     p_closed = []
     points_closed = []
 
-    print('Converting curves to regions...')
+    print('*** Converting curves to regions...')
     for p in paths:
         length = p.length()
         nSegs = int(length / tri_reso)
@@ -146,13 +145,13 @@ def preprocess(file_name, reso, seam_w, tri_reso):
                 vs.append(pointsOffset[::-1][i])
 
     areas = [abs(p.area()) for p in p_closed]
-    print("Areas:", areas)
+    print("*** Areas:", areas)
     iMaxArea = areas.index(max(areas))
     for i in range(len(p_closed)):
         if i != iMaxArea:
             holes.append(np.mean(points_closed[i], axis=0))
 
-    print('Triangulating...')
+    print('*** Triangulating...')
     A = dict(vertices=vs, segments=es, holes=holes)
     B = tr.triangulate(A, 'p')
     # B = A
@@ -168,13 +167,13 @@ def preprocess(file_name, reso, seam_w, tri_reso):
     mesh = pymeshlab.Mesh(vs, fs)
     ms.add_mesh(mesh)
 
-    print("Removing low quality faces...")
+    print("*** Removing low quality faces...")
     ms.remove_isolated_pieces_wrt_face_num()
     ms.remove_isolated_pieces_wrt_diameter()
 
-    print("Merging close vertices...")
+    print("*** Merging close vertices...")
     ms.merge_close_vertices()
-    print("Isotropic explicit remeshing...")
+    print("*** Isotropic explicit remeshing...")
     ms.remeshing_isotropic_explicit_remeshing(targetlen=gap, maxsurfdist=gap, iterations=20)
     ms.invert_faces_orientation()
 
@@ -183,14 +182,14 @@ def preprocess(file_name, reso, seam_w, tri_reso):
     with open('./data/timestamp', 'w') as ofile:
         ofile.write(str(int(time.time())))
 
-    print("Done preprocessing...")
+    print("### py: Done preprocessing...")
 
 
 def is_file_changed(file_name):
     global lastProcessingTime
     mtime = os.path.getmtime(file_name)
     if mtime - lastProcessingTime > 1:
-        print('SVG file change detected.')
+        print('*** py: SVG file change detected...')
         lastProcessingTime = mtime
         return True
     return False
@@ -199,7 +198,7 @@ def is_file_changed(file_name):
 while True:
     time.sleep(.5)
     if is_file_changed(name):
-        print("Preprocess with resolution: {}, seamWidth: {}, triResolution: {}".format(resolution, seamWidth, triResolution))
+        print("*** Preprocess with resolution: {}, seamWidth: {}, triResolution: {}".format(resolution, seamWidth, triResolution))
         preprocess(name, resolution, seamWidth, triResolution)
 
 

@@ -34,8 +34,8 @@ public:
 
   igl::opengl::glfw::Viewer* viewer;
 
-  double k_s = 8;   // k_stress
-  double k_e = 0.005;   // k_electrostatic
+  double k_s = 40;   // k_stress
+  double k_e = 0.001;   // k_electrostatic
   double k_b = 0.1;   // k_bending
   double h = 0.1;
   double damping = 0.99;
@@ -46,7 +46,7 @@ public:
 
   float camera_radius = 5;
   float camera_rad = M_PI / 2;
-  float rad_per_frame = 0.02;
+  float rad_per_frame = 0.00;
 
   bool show_edge_force = false;
   bool show_electrostatic_force = false;
