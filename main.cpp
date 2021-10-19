@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <utility>
 
 #include <imgui/imgui.h>
 #include <igl/opengl/glfw/Viewer.h>
@@ -12,35 +13,8 @@
 
 using namespace std;
 
-// reload model from the same obj file
-void loadModel(igl::opengl::glfw::Viewer& viewer,
-               Eigen::MatrixXd& V,
-               Eigen::MatrixXi& F,
-               Eigen::MatrixXd& NF,
-               Model* model) {
-
-  char buff[100];
-  sprintf(buff, "%s/data/out.obj", ROOT_DIR);
-  string input_dir = buff;
-  igl::readOBJ(input_dir, V, F);
-  *model = Model(V, F, &viewer);
-  viewer.data().clear();
-  viewer.data().set_mesh(model->V, model->F);
-  igl::per_face_normals(model->V, model->F,NF);
-  viewer.data().set_normals(NF);
-//  viewer.data().double_sided = true;
-
-  Eigen::MatrixXd C = V * 0;
-  for (int i=0; i<C.rows(); i++) {
-    C(i,0) = 0.6;
-    C(i,1) = 0.6;
-    C(i,2) = 0.8;
-  }
-  viewer.data().set_colors(C);
-}
 
 int main(int argc, char **argv) {
-
   // initialize variables
   igl::opengl::glfw::Viewer viewer;
   igl::opengl::glfw::imgui::ImGuiMenu menu;
@@ -49,18 +23,28 @@ int main(int argc, char **argv) {
   Eigen::MatrixXi F;
   Eigen::MatrixXd NF; //per-face normal
 
+
   auto* model = new Model();
   auto* utils = new Utils();
+  auto* param = new Param();
   unsigned int last_modified_time = utils->last_modified_time("./data/timestamp");
 
+  char* foo;
+  std::vector<int> ivs_fixed;
+  for (int i=0; i<argc; i++) {
+    if (i==0) continue;
+    int iv_fixed = std::strtol(argv[i], &foo, 10);
+    ivs_fixed.push_back(iv_fixed);
+  }
+
   // load initial model
-  loadModel(viewer, V, F, NF, model);
+  loadModel(viewer, V, F, NF, model, ivs_fixed, param);
 
   // callback
   viewer.callback_post_draw = [&](igl::opengl::glfw::Viewer& viewer)->bool {
     if (last_modified_time != utils->last_modified_time("./data/timestamp")) {
       std::cout<<"C++ detected model modification"<<std::endl;
-      loadModel(viewer, V, F, NF, model);
+      loadModel(viewer, V, F, NF, model, ivs_fixed, param);
       last_modified_time = utils->last_modified_time("./data/timestamp");
       model->paused = false;
 
@@ -120,26 +104,26 @@ int main(int argc, char **argv) {
     );
 
     ImGui::InputDouble("tensile factor", &model->k_s, 0.001, 0.01, "%.3g");
-    ImGui::InputDouble("dielectric factor", &model->k_e, 0.001, 0.01, "%.3g");
-    ImGui::InputDouble("bending factor", &model->k_b, 0.001, 0.01, "%.3g");
+    ImGui::InputDouble("dielectric factor", &model->param->k_e, 0.001, 0.01, "%.3g");
+    ImGui::InputDouble("bending factor", &model->param->k_b, 0.001, 0.01, "%.3g");
     ImGui::InputDouble("damping", &model->damping, 0.001, 0.01, "%.3g");
-    ImGui::InputDouble("damping factor", &model->damping_coeff, 0.001, 0.01, "%.3g");
+//    ImGui::InputDouble("damping factor", &model->damping_coeff, 0.001, 0.01, "%.3g");
     ImGui::InputDouble("step size", &model->h);
-    ImGui::InputInt("steps per frame", &model->steps_per_frame);
-    ImGui::InputFloat("rad per frame", &model->rad_per_frame, 0.01, 0.1, "%.2g");
-
+    ImGui::InputDouble("platform_on", &param->w_platform);
+    ImGui::InputInt("# steps/frame", &model->steps_per_frame);
+//    ImGui::InputFloat("rad per frame", &model->rad_per_frame, 0.01, 0.1, "%.2g");
     if (ImGui::Button("begin")) {
       model->paused = false;
     }
-
     if (ImGui::Button("paused")) {
       model->paused = true;
     }
-
     if (ImGui::Button("Reset")) {
-      loadModel(viewer, V, F, NF, model);
+      loadModel(viewer, V, F, NF, model, ivs_fixed, param);
     }
-
+    if (ImGui::Button("add anchor")) {
+      loadModel(viewer, V, F, NF, model, ivs_fixed, param);
+    }
     if (ImGui::Button("Download")) {
       char buff[100];
       sprintf(buff, "%s/data/download/output.obj", ROOT_DIR);

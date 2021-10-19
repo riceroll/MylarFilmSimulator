@@ -74,23 +74,33 @@ include_directories("./include/boost/")
 # ============================= linking ===============================
 
 # JZ: use llvm Clang to use openmp
-set(CMAKE_CXX_COMPILER "/usr/local/opt/llvm/bin/clang")
+#set(CMAKE_CXX_COMPILER "/usr/local/opt/llvm/bin/clang")
 # enable openmp, enable c++ std library, enable o3 optimization level
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -lc++ -o3")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -lc++ -o3")
 # link openmp in llvm
 # TODO: link_directories should be avoided: https://cmake.org/cmake/help/latest/command/link_directories.html
-link_directories("/usr/local/opt/llvm/lib")
+#link_directories("/usr/local/opt/llvm/lib")
 
+add_subdirectory(lib/libShapeOp)
+include_directories(lib/libShapeOp/src)
 
 add_library(model SHARED model.cpp Utils.cpp Utils.h)
-target_link_libraries(model  igl::core igl::opengl_glfw_imgui)
+target_compile_definitions(model PRIVATE ROOT_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+target_link_libraries(model  igl::core igl::opengl_glfw_imgui ShapeOp)
 
 add_library(preprocessor SHARED Preprocessor.cpp)
 target_link_libraries(preprocessor igl::triangle)
 
 add_executable(${PROJECT_NAME}  main.cpp)
 target_compile_definitions(${PROJECT_NAME} PRIVATE ROOT_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
-target_link_libraries(${PROJECT_NAME}  igl::core igl::opengl_glfw_imgui)
+target_link_libraries(${PROJECT_NAME}  igl::core igl::opengl_glfw_imgui ShapeOp)
 target_link_libraries(${PROJECT_NAME}  model)
 target_link_libraries(${PROJECT_NAME}  preprocessor)
+
+
+add_executable(batch  batch.cpp)
+target_compile_definitions(batch PRIVATE ROOT_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+target_link_libraries(batch  igl::core igl::opengl_glfw_imgui ShapeOp)
+target_link_libraries(batch  model)
+target_link_libraries(batch  preprocessor)
 

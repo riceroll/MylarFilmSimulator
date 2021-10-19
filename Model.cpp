@@ -4,14 +4,94 @@
 
 #include "Model.h"
 
+// reload model from the same obj file
+void loadModel(igl::opengl::glfw::Viewer& viewer,
+               Eigen::MatrixXd& V,
+               Eigen::MatrixXi& F,
+               Eigen::MatrixXd& NF,
+               Model* model,
+               vector<int> ivs_fixed,
+               Param* param) {
+
+  char buff[100];
+  sprintf(buff, "%s/data/out.obj", ROOT_DIR);
+  string input_dir = buff;
+  igl::readOBJ(input_dir, V, F);
+  *model = Model(V, F, &viewer, param);
+  model->ivs_fixed = std::move(ivs_fixed);
+  viewer.data().clear();
+  viewer.data().set_mesh(model->V, model->F);
+  igl::per_face_normals(model->V, model->F,NF);
+  viewer.data().set_normals(NF);
+//  viewer.data().double_sided = true;
+
+  Eigen::MatrixXd C = V * 0;
+  for (int i=0; i<C.rows(); i++) {
+    C(i,0) = 0.6;
+    C(i,1) = 0.6;
+    C(i,2) = 0.8;
+  }
+  viewer.data().set_colors(C);
+}
+
 Model::Model() {
 }
 
-Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* viewer) {
+Eigen::RowVector3d Model::elec_force(Eigen::RowVector3d v0, Eigen::RowVector3d v1, double area0, double area1) {
+  double d = (v0 - v1).norm();
+  double q0 = area0;
+  double q1 = area1;
+  double f_electrostatic = q0 * q1 * this->param->k_e / d / d;
+
+  Eigen::RowVector3d f = (v1 - v0).normalized() * f_electrostatic;
+
+  return f;
+}
+
+Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* viewer, Param* param) {
   this->viewer =viewer;
+  this->solver.setPoints(V.transpose());
+  this->param = param;
+
+  vector<vector<int>> L;
+  igl::boundary_loop(this->F, L);
+
+  vector<int> l_max;
+  cout<<L.size()<<endl;
+  for (auto l : L) {
+    if (l.size() > l_max.size()) l_max = l;
+  }
+  ivs_fixed.clear();
+  for (auto x : l_max) {
+    ivs_fixed.push_back(x);
+    cout<<x<<endl;
+  }
+
 
   this->V = V;
   this->F = F;
+
+//  rose
+  V_platform.resize(9, 3);
+  V_platform <<
+    -15, -100, 15,
+    -15, -100, 0,
+    -15, -100, -15,
+    0, -100, 15,
+    0, -100, 0,
+    0, -100, -15,
+    15, -100, 15,
+    15, -100, 0,
+    15, -100, -15;
+
+//shell
+//V_platform.resize(1600, 3);
+//
+//for (double x=-100; x<=100; x+= 5) {
+//  for (double y=-100; y<=100; y+=5) {
+//    V_platform << x, y, -20;
+//  }
+//}
 
   // pre-normalize
   this->V.col(0) = this->V.col(0).array() - this->V.col(0).mean();
@@ -22,7 +102,6 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
   double z_max = max(abs(V.col(2).maxCoeff()), abs(V.col(2).minCoeff()));
   this->V /= max(max(x_max, y_max), z_max);
   this->V *= 50;
-  this->V += Eigen::MatrixXd::Random(V.rows(), V.cols()) * 1e-5;
 
   set<tuple<int, int>> Edges;
   auto add_edge = [&](int i, int j) {
@@ -30,6 +109,7 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
       Edges.insert(make_tuple(i, j));
     }
   };
+
   for (int i=0; i<this->F.rows(); i++) {
     Eigen::RowVector3i face = this->F.row(i);
     add_edge(face(0), face(1));
@@ -59,6 +139,16 @@ Model::Model(Eigen::MatrixXd& V, Eigen::MatrixXi& F, igl::opengl::glfw::Viewer* 
 
     this->L0(i) = l;
   }
+
+  this->V += Eigen::MatrixXd::Random(V.rows(), V.cols()) * 1e-3;
+  char buff[100];
+  sprintf(buff, "%s/data/download/rose_truth.obj", ROOT_DIR);
+  string input_dir = buff;
+//  igl::readOBJ(input_dir, this->V, F);
+
+  cout<< V.col(0).maxCoeff()<<" "<<V.col(0).minCoeff()<<endl;
+  cout<< V.col(1).maxCoeff()<<" "<<V.col(1).minCoeff()<<endl;
+  cout<< V.col(2).maxCoeff()<<" "<<V.col(2).minCoeff()<<endl;
 
   // pre-assembly
 
@@ -200,10 +290,10 @@ void Model::step(int n) {
       Eigen::RowVector3d partial_j =
         -cot_ijk / (cot_jik + cot_ijk) * n_k / h_k - cot_ijl / (cot_jil + cot_ijl) * n_l / h_l;
 
-      Eigen::RowVector3d f_i = -this->k_b * rho * partial_i;
-      Eigen::RowVector3d f_j = -this->k_b * rho * partial_j;
-      Eigen::RowVector3d f_k = -this->k_b * rho * partial_k;
-      Eigen::RowVector3d f_l = -this->k_b * rho * partial_l;
+      Eigen::RowVector3d f_i = -this->param->k_b * rho * partial_i;
+      Eigen::RowVector3d f_j = -this->param->k_b * rho * partial_j;
+      Eigen::RowVector3d f_k = -this->param->k_b * rho * partial_k;
+      Eigen::RowVector3d f_l = -this->param->k_b * rho * partial_l;
 
       this->Force.row(this->ivs_i[i]) += f_i;
       this->Force.row(this->ivs_j[i]) += f_j;
@@ -222,15 +312,23 @@ void Model::step(int n) {
         double area0 = this->M(i);
         double area1 = this->M(j);
 
-        double d = (v0 - v1).norm();
-        double q0 = area0;
-        double q1 = area1;
-        double f_electrostatic = q0 * q1 * this->k_e / d / d;
-
-        Eigen::RowVector3d f = (v1 - v0).normalized() * f_electrostatic;
+        auto f = elec_force(v0, v1, area0, area1);
 
         this->Force.row(i) -= f;
         this->Force.row(j) += f;
+      }
+    }
+
+    for (int i = 0; i < this->V.rows(); i++) {
+      for (int j = 0; j < this->V_platform.rows(); j++) {
+        Eigen::RowVector3d v0 = this->V.row(i);
+        Eigen::RowVector3d v1 = this->V_platform.row(j);
+        double area0 = this->M(i);
+        double area1 = param->w_platform;
+
+        auto f = elec_force(v0, v1, area0, area1);
+
+        this->Force.row(i) -= f;
       }
     }
 
@@ -244,12 +342,13 @@ void Model::step(int n) {
       }
     }
 
-    this->Vel += this->Force * this->h;
+    Vel += Force * h;
+    Vel *= damping;
+    V += Vel * h;
 
-    this->Vel *= this->damping;
-
-    this->V += this->Vel * this->h;
-
+    for (int iv_fixed : ivs_fixed) {
+      V.row(iv_fixed) -= Vel.row(iv_fixed) * h;
+    }
 
     double maxVel = 0;
     for (int i = 0; i < this->Vel.rows(); i++) {
@@ -271,7 +370,30 @@ void Model::step(int n) {
 
   }
 
-
-
 }
 
+void Model::step2(int n) {
+
+  if (this->paused) {
+    return;
+  }
+
+  // hinge force
+  auto cot = [&](double t) {
+    return t / sqrt(1 - t * t);
+  };
+
+//  bending force
+  // solver.solve(this->param->steps_per_frame);
+  // solver_points = solver.getPoints();
+
+//  cout<<solver_points.size()<<endl;
+//  cout<<this->V.size()<<endl;
+//  int a;
+//  cin>>a;
+
+  // this->V = solver_points.transpose();
+
+//  cout<<this->V<<endl;
+
+}
