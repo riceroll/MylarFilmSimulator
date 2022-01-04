@@ -2,9 +2,10 @@
 C++-based simulator for Mylar film, with electrostatic energy, 
 edge length energy, bending energy, boosted with openMP.
 
-To run the code, follow the three steps.
 
 ### 1. Dependency
+- MacOS
+
 ```bash
 # install homebrew if not installed
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
